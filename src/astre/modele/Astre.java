@@ -435,7 +435,7 @@ public class Astre
 			{
 				if ( !firstIteration ) { ModuleIUT += ", \n"; } else { firstIteration = false; }
 				ModuleIUT += "('" + m.getCode ( )   + "','" + m.getLibLong ( ) + "','" + m.getLibCourt ( ) + "','" + m.getTypeModule ( ) + 
-							"'," + m.estValide ( ) + ","   + m.getSemestre ( ).getIdSemestre ( )          + ")";
+							"'," + m.estValide ( ) + ","   + m.getSemestre ( ).getIdSemestre ( )    + "," + m.getTotalHeurePN ( ) + "," + m.getTotalHeureAffectee ( ) + ")";
 			}
 
 			ModuleIUT += "; \n\n";
