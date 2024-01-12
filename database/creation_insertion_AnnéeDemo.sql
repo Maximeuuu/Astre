@@ -1,8 +1,8 @@
 /*
-	@author Alizea LEBARON
+	@author Alizéa LEBARON
 	@version 1.1.0 - 12/12/2023 
 	@date 06/12/2023 
-	@description Script de creation de la base de donnees
+	@description Script de création de la base de données
 */
 
 /* ---------------------------------------------------- */
@@ -19,7 +19,7 @@ DROP TABLE Horaire     CASCADE;
 DROP TABLE Historique  CASCADE;
 
 /* ---------------------------------------------------- */
-/*                  Creation des tables                 */
+/*                  Création des tables                 */
 /* ---------------------------------------------------- */
 
 CREATE TABLE Semestre
@@ -121,7 +121,7 @@ CREATE TABLE Historique
 	PRIMARY KEY(Id_Historique)
 );
 
-/* Creation des trigger */
+/* Création des trigger */
 
 -- Pour les intervenants
 CREATE TRIGGER tr_update_Intervenant
@@ -172,7 +172,7 @@ ON Horaire
 FOR EACH ROW
 EXECUTE FUNCTION f_update_historique_Horaire();
 
-/* Creation de vue */
+/* Création de vue */
 
 -- Vue intervenant
 CREATE VIEW v_Intervenant AS
@@ -205,8 +205,8 @@ CREATE OR REPLACE VIEW v_Module AS
 SELECT id_semestre, Code_ModuleIUT, libLong, heureAffecte || '/' || heurePN as recap, valide
 FROM   ModuleIUT;
 /*
-	@author Alizea LEBARON
-	@description Script d'insertion pour cette annee
+	@author Alizéa LEBARON
+	@description Script d'insertion pour cette année
 */
 
 /* ---------------------------------------------------- */
@@ -222,15 +222,10 @@ DELETE FROM Contrat     CASCADE;
 DELETE FROM Heure       CASCADE;
 
 /* ---------------------------------------------------- */
-/*                  Creation des tuples                 */
+/*                  Création des tuples                 */
 /* ---------------------------------------------------- */
 
-UPDATE Annee SET Actuelle = false;
-
-INSERT INTO Annee VALUES
-('AnnéeDemo', true);
-
-INSERT INTO Semestre VALUES 
+ INSERT INTO Semestre VALUES 
 (1,8,4,100,13), 
 (2,6,3,75,12), 
 (3,4,2,50,13), 
@@ -255,14 +250,12 @@ INSERT INTO Heure ( nomHeure, coeffTD ) VALUES
 ('Tut','1.0'); 
 
 INSERT INTO ModuleIUT VALUES 
-('R1.01','Initiation au developpement','init_dev','Ressource',true,1,304.0,184.0), 
 ('R1.02','Developpement interfaces Web','Dev_Web','Ressource',false,1,0.0,0.0), 
 ('R1.03','Introduction Architecture','intro_archi','Ressource',false,1,400.0,0.0), 
 ('R1.11','Bases de la communication','comm','Ressource',false,1,200.0,40.0), 
 ('S1.04','Creation  base de donnees','BADO','SAE',false,1,20.0,25.0), 
 ('R1.12','Projet Professionnel et Personnel','PPP','PPP',true,1,45.0,45.0), 
 ('R2.03','Qualite de developpement','quali_dev','Ressource',false,2,0.0,0.0), 
-('S2.03','Installation de services reseau','serv_res','SAE',false,2,15.0,0.0), 
 ('S3.01','Developpement application','dev_app','SAE',false,3,140.0,0.0), 
 ('R4.01','Architecture logicielle','archi_log','Ressource',false,4,71.0,0.0), 
 ('R4.08','Virtualisation','virtualisation','Ressource',false,4,0.0,0.0), 
@@ -276,7 +269,10 @@ INSERT INTO ModuleIUT VALUES
 ('R2.11','Droit','droit','Ressource',false,2,90.0,30.0), 
 ('R4.10','Complement web','comp_web','Ressource',false,4,100.0,250.0), 
 ('R5.03','Politique de communication','comm','Ressource',false,5,210.0,80.0), 
-('R6.01','Initiation entrepreneuriat','init_ent','Ressource',true,6,4.0,4.0); 
+('R6.01','Initiation entrepreneuriat','init_ent','Ressource',true,6,4.0,4.0), 
+('S5.06','sqd','qsd','SAE',false,2,0.0,0.0), 
+('R1.01','Initiation au developpement','init_dev','Ressource',true,1,304.0,214.0), 
+('S2.03','Installation de services reseau','serv_res','SAE',false,2,15.0,1.0); 
 
 INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES 
 ('Goscinny','Rene',192,364,1), 
@@ -286,11 +282,6 @@ INSERT INTO Intervenant (nom, prenom, hService, hMax, Id_Contrat) VALUES
 ('Balzac','Honore',0,96,5); 
 
 INSERT INTO Intervient VALUES 
-(1,1,'R1.01',3,1,4.0,'1 CM / semaine'), 
-(2,2,'R1.01',3,2,30.0,'...'), 
-(3,2,'R1.01',3,2,30.0,'...'), 
-(1,3,'R1.01',5,4,120.0,'...'), 
-(2,3,'R1.01',5,4,0.0,'...'), 
 (5,2,'R1.11',10,2,40.0,'...'), 
 (2,5,'S1.04',1,15,15.0,'...'), 
 (3,7,'S1.04',1,5,5.0,'...'), 
@@ -303,13 +294,15 @@ INSERT INTO Intervient VALUES
 (5,2,'R2.11',10,1,30.0,'...'), 
 (4,2,'R4.10',10,5,250.0,'...'), 
 (3,3,'R5.03',10,2,80.0,'...'), 
-(3,2,'R6.01',1,2,4.0,'...'); 
+(3,2,'R6.01',1,2,4.0,'...'), 
+(1,1,'R1.01',3,1,4.0,'1 CM / semaine'), 
+(1,3,'R1.01',5,4,120.0,'...'), 
+(2,2,'R1.01',3,2,30.0,'...'), 
+(2,3,'R1.01',5,1,30.0,'...'), 
+(3,2,'R1.01',3,2,30.0,'...'), 
+(2,5,'S2.03',1,1,1.0,'...'); 
 
 INSERT INTO Horaire VALUES 
-(1,'R1.01',3,1,3), 
-(2,'R1.01',15,5,3), 
-(3,'R1.01',30,6,5), 
-(6,'R1.01',0,0,1), 
 (1,'R1.02',0,0,0), 
 (2,'R1.02',0,0,0), 
 (3,'R1.02',0,0,0), 
@@ -332,8 +325,6 @@ INSERT INTO Horaire VALUES
 (2,'R2.03',0,0,0), 
 (3,'R2.03',0,0,0), 
 (6,'R2.03',0,0,1), 
-(5,'S2.03',15,15,1), 
-(7,'S2.03',0,0,1), 
 (5,'S3.01',140,0,1), 
 (7,'S3.01',0,0,1), 
 (1,'R4.01',2,2,1), 
@@ -377,5 +368,13 @@ INSERT INTO Horaire VALUES
 (1,'R6.01',0,0,0), 
 (2,'R6.01',2,2,1), 
 (3,'R6.01',0,0,0), 
-(6,'R6.01',0,0,1); 
+(6,'R6.01',0,0,1), 
+(5,'S5.06',0,0,1), 
+(7,'S5.06',0,0,1), 
+(1,'R1.01',3,1,3), 
+(2,'R1.01',15,5,3), 
+(3,'R1.01',30,6,5), 
+(6,'R1.01',0,0,1), 
+(5,'S2.03',15,15,1), 
+(7,'S2.03',0,0,1); 
 
